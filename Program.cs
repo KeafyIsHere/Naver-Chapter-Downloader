@@ -27,7 +27,7 @@ namespace NaverDownloader
             try
             {
                 WebClient wc = new WebClient();
-                
+
                 string source = wc.DownloadString(url);
                 string htmlimagebits = source.Split(new string[] { "<div class=\"wt_viewer\" style=\"" }, StringSplitOptions.None)[1].Trim().Split(new string[] { "</div>" }, StringSplitOptions.None)[0];
                 int pagenum = 1;
@@ -35,7 +35,8 @@ namespace NaverDownloader
                 {
                     if (line.StartsWith("https://image-comic.pstatic.net"))
                     {
-                        SetHeaders(wc);
+                        wc.Headers.Add("authority", "image-comic.pstatic.net");
+                        wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36");
                         Console.WriteLine($"Downloading Page {pagenum}!");
                         wc.DownloadFile(line.Split('"')[0], $"{prefix}\\{prefix} Page {pagenum}.png");
                         pagenum++;
@@ -48,12 +49,6 @@ namespace NaverDownloader
             }
             Console.WriteLine("Job Done!");
             Console.ReadLine();
-        }
-
-        private static void SetHeaders(WebClient wc)
-        {
-            wc.Headers.Add("authority", "image-comic.pstatic.net");
-            wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36");
         }
     }
 }
