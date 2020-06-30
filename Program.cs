@@ -42,12 +42,12 @@ namespace NaverDownloader
                         pagenum++;
                     }
                 }
+                Console.WriteLine("Job Done!");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-            Console.WriteLine("Job Done!");
             Console.ReadLine();
         }
     }
